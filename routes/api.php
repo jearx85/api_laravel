@@ -24,16 +24,11 @@ use Firebase\JWT\Key;
     return $request->user();
 });  */
 
-Route::get('token', function(){
-      $data = Category::all()->first()->toArray();
 
-      $jwt = JWT::encode($data, env('JWT_SECRET'), 'HS256');
 
-      return response()->json([
-        'token' => $jwt,
-        'message' => 'este es el token',
-      ]);
-});
+Route::post('login', [AuthController::class, 'login'])->middleware('jwt');
+Route::post('logout', [AuthController::class, 'logout']);
+
 // categories CRUD
 Route::get('category/all', [CategoryController::class, 'getAll']);
 Route::get('category/{id}', [CategoryController::class, 'getById']);
@@ -55,4 +50,3 @@ Route::put('user/{id}/update',[AuthController::class, 'update']);
 Route::get('user/{id}',[AuthController::class, 'getById']);
 Route::delete('user/{id}/destroy',[AuthController::class, 'destroy']);
 Route::post('user/store',[AuthController::class, 'store']);
-

@@ -30,15 +30,13 @@ class PostController extends Controller
     }
 
     public function getById($id){
-        $post = Post::find($id)->toArray();
-
-        if(!$post){
+        if(Post::find($id) == null){
             return response()->json([
                 'message' => 'No post found',
                 404
             ]);
-
         }
+        $post = Post::find($id)->toArray();
         return response()->json($post, 200);
 
     }
@@ -48,7 +46,7 @@ class PostController extends Controller
 
         $title = $request->title;
         $content = $request->content;
-        $category_id = Category::all();
+        //$category_id = Category::all();
 
         if($title == null){
             return response()->json([
@@ -69,6 +67,13 @@ class PostController extends Controller
 
     public function update(Request $request, $id)
     {
+        $post = post::all()->toArray();
+        if(!post::find($id)){
+            return response()->json([
+                 'message' => 'no hay post con ese id'
+            ]);
+        }
+
         post::find($id)->update($request->all());
         return response()->json([
             'message' => 'Post updated'
@@ -83,6 +88,11 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
+        if(!Post::find($id)){
+            return response()->json([
+                 'message' => 'post no encontrado'
+            ]);
+        }
         Post::destroy($id);
         return response()->json([
             'message' => 'Deleted success'

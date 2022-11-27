@@ -13,18 +13,22 @@ class CategoryController extends Controller
 
     public function getAll(){
         $categories = Category::all()->toArray();
-
+        if($categories == null){
+            return response()->json([
+                 'message' => 'no hay categorias'
+            ]);
+        }
         return response()->json([
             "code" => 200,
             "status" => 'true',
             "data" => $categories
         ]);
     }
-    
+
     public function store(Request $request){
         $name = $request->name;
         $description = $request->description;
-        
+
         if(!$name){
             return response()->json([
                 'message' => 'Nombre vacio'
@@ -38,13 +42,20 @@ class CategoryController extends Controller
         category::create($request->all());
         return response()->json([
             'message' => 'Categoria creada con exito',
+            'datos' => $data,
             'token' => $jwt
         ]);
 
     }
 
     public function update(Request $request, $id){
-    
+        $category = category::all()->toArray();
+        if($category == null){
+            return response()->json([
+                 'message' => 'no hay categorias'
+            ]);
+        }
+
         category::find($id)->update($request->all());
         return response()->json([
             'message' => 'Update success'
@@ -52,6 +63,12 @@ class CategoryController extends Controller
     }
 
     public function  destroy($id){
+
+        if(!Category::find($id)){
+            return response()->json([
+                 'message' => 'categoria no encontrada'
+            ]);
+        }
         category::destroy($id);
         return response()->json([
             'message' => 'Delete success'
@@ -59,12 +76,14 @@ class CategoryController extends Controller
     }
 
     public function getById($id){
-        $category = category::find($id)->toArray();
 
-        if(empty($category)){
-            return response()->json(['message' => 'Not found'], 404);
-        }                        
-                     
-        return response()->json($category, 200);                    
+        if(!category::find($id)){
+            return response()->json([
+                'message' => 'no hay categorias con ese id',
+                'status'=> 404
+            ]);
+        }
+        $category = category::find($id)->toArray();
+        return response()->json($category, 200);
     }
 }

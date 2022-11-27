@@ -6,6 +6,11 @@ use Illuminate\Http\Request;
 
 class AutorController extends Controller
 {
+
+    public function __construct(){
+        $this->middleware('auth');
+        $this->middleware('soloautor', ['only'=> ['index']]);
+     }
     /**
      * Display a listing of the resource.
      *
