@@ -30,19 +30,22 @@ Route::post('login', [AuthController::class, 'login'])->middleware('jwt');
 Route::post('logout', [AuthController::class, 'logout']);
 
 // categories CRUD
-Route::get('category/all', [CategoryController::class, 'getAll']);
-Route::get('category/{id}', [CategoryController::class, 'getById']);
-Route::post('category/store', [CategoryController::class, 'store']);
-Route::post('category/{id}/update', [CategoryController::class, 'update']);
-Route::delete('category/{id}/destroy', [CategoryController::class, 'destroy']);
-
+Route::group(['prefix' => 'category'], function(){
+Route::get('/all', [CategoryController::class, 'getAll']);
+Route::get('{id}/edit', [CategoryController::class, 'edit']);
+Route::post('/store', [CategoryController::class, 'store']);
+Route::put('/{id}/update', [CategoryController::class, 'update']);
+Route::delete('/{id}/destroy', [CategoryController::class, 'destroy']);
+});
 
 //Post CRUD
-Route::get('post/all', [PostController::class, 'getAll']);
-Route::get('post/{id}', [PostController::class, 'getById']);
-Route::post('post/store', [PostController::class, 'store']);
-Route::post('post/{id}/update', [PostController::class, 'update']);
-Route::delete('post/{id}/destroy', [PostController::class, 'destroy']);
+Route::group(['prefix' => 'post'], function(){
+    Route::get('/all', [PostController::class, 'all']);
+    Route::post('/store', [PostController::class, 'store']);
+    Route::get('{id}/edit', [PostController::class, 'edit']);
+    Route::put('{id}/update', [PostController::class, 'update']);
+    Route::delete('{id}/destroy', [PostController::class, 'destroy']);
+});
 
 //user CRUD
 Route::get('user/all',[AuthController::class, 'getAll']);

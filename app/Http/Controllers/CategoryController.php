@@ -26,24 +26,25 @@ class CategoryController extends Controller
     }
 
     public function store(Request $request){
-        $name = $request->name;
-        $description = $request->description;
-
-        if(!$name){
-            return response()->json([
-                'message' => 'Nombre vacio'
-            ]);
-        }
-        $data = [$name, $description];
-
-        //$data = $request->name->toArray();
-        $jwt = JWT::encode($data, env('JWT_SECRET'), 'HS256');
+        //$name = $request->name;
+        //$description = $request->description;
+//
+        //if(!$name){
+        //    return response()->json([
+        //        'message' => 'Nombre vacio'
+        //    ]);
+        //}
+        //$data = [$name, $description];
+//
+        ////$data = $request->name->toArray();
+        //$jwt = JWT::encode($data, env('JWT_SECRET'), 'HS256');
 
         category::create($request->all());
         return response()->json([
             'message' => 'Categoria creada con exito',
-            'datos' => $data,
-            'token' => $jwt
+            'code' => 200,
+            'status' => 'true',
+            'data' => ''
         ]);
 
     }
@@ -58,7 +59,8 @@ class CategoryController extends Controller
 
         category::find($id)->update($request->all());
         return response()->json([
-            'message' => 'Update success'
+            'message' => 'Update success',
+            'data'=> $category
         ]);
     }
 
@@ -69,13 +71,20 @@ class CategoryController extends Controller
                  'message' => 'categoria no encontrada'
             ]);
         }
-        category::destroy($id);
-        return response()->json([
-            'message' => 'Delete success'
-        ]);
+        $category = Category::find($id);
+        $category->delete();
+        $categories = Category::all()->toArray();
+        Category::destroy($id);
+        return response()->json(
+            [
+                'code' => 200,
+                'status' => 'true',
+                'data' => $categories
+            ]
+        );
     }
 
-    public function getById($id){
+    public function edit($id){
 
         if(!category::find($id)){
             return response()->json([
@@ -83,7 +92,12 @@ class CategoryController extends Controller
                 'status'=> 404
             ]);
         }
-        $category = category::find($id)->toArray();
-        return response()->json($category, 200);
+        $category = category::find($id);
+        return response()->json(
+            [
+                'code' => 200,
+                'status' => 'true',
+                'data' => $category
+            ]);
     }
 }

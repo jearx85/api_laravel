@@ -13,54 +13,63 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function getAll(){
-        $post = post::all()->toArray();
+    public function all(){
+        $posts = post::all()->toArray();
 
-        if($post == null){
-            return response()->json([
-                 'message' => 'no hay posts'
-            ]);
-        }
+       // if($posts == null){
+       //     return response()->json([
+       //          'message' => 'no hay posts'
+       //     ]);
+       // }
 
         return response()->json([
             "code" => 200,
             "status" => 'true',
-            "data" => $post
+            "data" => $posts
         ]);
     }
 
-    public function getById($id){
+    public function edit($id){
         if(Post::find($id) == null){
             return response()->json([
                 'message' => 'No post found',
                 404
             ]);
         }
-        $post = Post::find($id)->toArray();
-        return response()->json($post, 200);
+        $post = Post::find($id);
+        return response()->json(
+            [
+                'code' => 200,
+                'status' => 'true',
+                'data' => $post
+            ]
+        );
 
     }
 
     public function store(Request $request)
     {
 
-        $title = $request->title;
-        $content = $request->content;
-        //$category_id = Category::all();
-
-        if($title == null){
-            return response()->json([
-                'message' => 'Titulo vacio'
-            ]);
-        }else if($content == null){
-            return response()->json([
-                'message' => 'Contenido vacio'
-            ]);
-        }
+        //$title = $request->title;
+        //$content = $request->content;
+        ////$category_id = Category::all();
+//
+        //if($title == null){
+        //    return response()->json([
+        //        'message' => 'Titulo vacio'
+        //    ]);
+        //}else if($content == null){
+        //    return response()->json([
+        //        'message' => 'Contenido vacio'
+        //    ]);
+        //}
 
         post::create($request->all());
         return response()->json([
-            'message' => 'Post creado con exito'
+            'message' => 'Post creado con exito',
+            'code' => 200,
+            'status' => 'true',
+            'data' => ''
         ]);
     }
 
@@ -76,7 +85,10 @@ class PostController extends Controller
 
         post::find($id)->update($request->all());
         return response()->json([
-            'message' => 'Post updated'
+            'message' => 'Post updated',
+            'code' => 200,
+            'status' => 'true',
+            'data' => ''
         ]);
     }
 
@@ -88,14 +100,16 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        if(!Post::find($id)){
-            return response()->json([
-                 'message' => 'post no encontrado'
-            ]);
-        }
+        $post = Post::find($id);
+        $post->delete();
+        $posts = Post::all()->toArray();
         Post::destroy($id);
-        return response()->json([
-            'message' => 'Deleted success'
-        ]);
+        return response()->json(
+            [
+                'code' => 200,
+                'status' => 'true',
+                'data' => $posts
+            ]
+        );
     }
 }
