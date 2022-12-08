@@ -3,7 +3,7 @@
 
 # Rutas
 ## categories CRUD
-- Route::group(['prefix' => 'category'], function(){
+Route::group(['prefix' => 'category'], function(){
 - Route::get('/all', [CategoryController::class, 'getAll']);
 - Route::get('{id}/edit', [CategoryController::class, 'edit']);
 - Route::post('/store', [CategoryController::class, 'store']);
