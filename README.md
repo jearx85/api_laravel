@@ -3,21 +3,21 @@
 
 # Rutas
 // categories CRUD
-Route::group(['prefix' => 'category'], function(){
-Route::get('/all', [CategoryController::class, 'getAll']);
-Route::get('{id}/edit', [CategoryController::class, 'edit']);
-Route::post('/store', [CategoryController::class, 'store']);
-Route::put('/{id}/update', [CategoryController::class, 'update']);
-Route::delete('/{id}/destroy', [CategoryController::class, 'destroy']);
+-Route::group(['prefix' => 'category'], function(){
+-Route::get('/all', [CategoryController::class, 'getAll']);
+-Route::get('{id}/edit', [CategoryController::class, 'edit']);
+-Route::post('/store', [CategoryController::class, 'store']);
+-Route::put('/{id}/update', [CategoryController::class, 'update']);
+-Route::delete('/{id}/destroy', [CategoryController::class, 'destroy']);
 });
 
 //Post CRUD
 Route::group(['prefix' => 'post'], function(){
-    Route::get('/all', [PostController::class, 'all']);
-    Route::post('/store', [PostController::class, 'store']);
-    Route::get('{id}/edit', [PostController::class, 'edit']);
-    Route::put('{id}/update', [PostController::class, 'update']);
-    Route::delete('{id}/destroy', [PostController::class, 'destroy']);
+    -Route::get('/all', [PostController::class, 'all']);
+    -Route::post('/store', [PostController::class, 'store']);
+    -Route::get('{id}/edit', [PostController::class, 'edit']);
+    -Route::put('{id}/update', [PostController::class, 'update']);
+    -Route::delete('{id}/destroy', [PostController::class, 'destroy']);
 });
 
 
