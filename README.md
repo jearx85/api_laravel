@@ -13,11 +13,11 @@
 
 ## Post CRUD
 Route::group(['prefix' => 'post'], function(){
-    - Route::get('/all', [PostController::class, 'all']);
-    - Route::post('/store', [PostController::class, 'store']);
-    - Route::get('{id}/edit', [PostController::class, 'edit']);
-    - Route::put('{id}/update', [PostController::class, 'update']);
-    - Route::delete('{id}/destroy', [PostController::class, 'destroy']);
+- Route::get('/all', [PostController::class, 'all']);
+- Route::post('/store', [PostController::class, 'store']);
+- Route::get('{id}/edit', [PostController::class, 'edit']);
+- Route::put('{id}/update', [PostController::class, 'update']);
+- Route::delete('{id}/destroy', [PostController::class, 'destroy']);
 });
 
 
