@@ -2,7 +2,7 @@
 
 
 # Rutas
-// categories CRUD
+## categories CRUD
 -Route::group(['prefix' => 'category'], function(){
 -Route::get('/all', [CategoryController::class, 'getAll']);
 -Route::get('{id}/edit', [CategoryController::class, 'edit']);
@@ -11,7 +11,7 @@
 -Route::delete('/{id}/destroy', [CategoryController::class, 'destroy']);
 });
 
-//Post CRUD
+## Post CRUD
 Route::group(['prefix' => 'post'], function(){
     -Route::get('/all', [PostController::class, 'all']);
     -Route::post('/store', [PostController::class, 'store']);
