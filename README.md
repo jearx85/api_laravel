@@ -1,3 +1,28 @@
+# Creado por Jeisson Estevens Araque Ramirez-PREELEC2202PC-TDS0033
+
+
+# Rutas
+// categories CRUD
+Route::group(['prefix' => 'category'], function(){
+Route::get('/all', [CategoryController::class, 'getAll']);
+Route::get('{id}/edit', [CategoryController::class, 'edit']);
+Route::post('/store', [CategoryController::class, 'store']);
+Route::put('/{id}/update', [CategoryController::class, 'update']);
+Route::delete('/{id}/destroy', [CategoryController::class, 'destroy']);
+});
+
+//Post CRUD
+Route::group(['prefix' => 'post'], function(){
+    Route::get('/all', [PostController::class, 'all']);
+    Route::post('/store', [PostController::class, 'store']);
+    Route::get('{id}/edit', [PostController::class, 'edit']);
+    Route::put('{id}/update', [PostController::class, 'update']);
+    Route::delete('{id}/destroy', [PostController::class, 'destroy']);
+});
+
+
+
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
